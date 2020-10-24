@@ -7,6 +7,9 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System.Net.Http;
+using Newtonsoft.Json.Linq;
+using Microsoft.WindowsAzure.Storage.Table;
 
 namespace FunctionAppVS
 {
@@ -31,5 +34,43 @@ namespace FunctionAppVS
 
             return new OkObjectResult(responseMessage);
         }
+
+
+        [FunctionName("TimerTrigger")]
+        public static async Task TimerTrigger(
+    [TimerTrigger("0 */2 * * * *", RunOnStartup = true)] TimerInfo timerInfo,
+    ILogger log)
+        {
+            HttpClient httpClient = new HttpClient();
+            var result = await httpClient.GetAsync("https://azurefunctlearn.azurewebsites.net/api/todo?code=sxN3waimwHBfnaq3jWNG0trVAmnRgnszzQAU6SOARS7d/n566AH/JA==");
+            var content = result.Content.ReadAsStringAsync().Result;
+        }
+
+        [FunctionName("IOBinding")]
+        [return : Table("DTOTable")]
+        public static async Task<MyDTO> IOBinding(
+[TimerTrigger("0 */2 * * * *", RunOnStartup = true)] TimerInfo timerInfo,
+[Blob("blobs/input.txt", FileAccess.Read, Connection = "AzureWebJobsStorage")] Stream blob,
+ILogger log)
+        {
+            StreamReader reader = new StreamReader(blob);
+            JObject jObject = JsonConvert.DeserializeObject<JObject>(reader.ReadToEnd());
+            MyDTO dto = new MyDTO()
+            {
+                text = jObject
+            };
+            return dto;
+        }
+    }
+
+    public class MyDTO : TableEntity
+    {
+        public MyDTO()
+        {
+            this.PartitionKey = Guid.NewGuid().ToString();
+            this.RowKey = "12345";
+        }
+
+        public JObject text { get; set; }
     }
 }
