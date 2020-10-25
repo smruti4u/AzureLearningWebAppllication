@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebJobWithSDK", "WebJobWith
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunctionAppVS", "FunctionAppVS\FunctionAppVS.csproj", "{2238B51D-65A1-4AC9-AD6E-4C9CD83E698B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlobOperations", "BlobOperations\BlobOperations.csproj", "{ABD5CCE2-19D6-4F49-B63A-B9BBF16A83DA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{2238B51D-65A1-4AC9-AD6E-4C9CD83E698B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2238B51D-65A1-4AC9-AD6E-4C9CD83E698B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2238B51D-65A1-4AC9-AD6E-4C9CD83E698B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ABD5CCE2-19D6-4F49-B63A-B9BBF16A83DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABD5CCE2-19D6-4F49-B63A-B9BBF16A83DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABD5CCE2-19D6-4F49-B63A-B9BBF16A83DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABD5CCE2-19D6-4F49-B63A-B9BBF16A83DA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

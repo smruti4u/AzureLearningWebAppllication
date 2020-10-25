@@ -57,7 +57,7 @@ ILogger log)
             JObject jObject = JsonConvert.DeserializeObject<JObject>(reader.ReadToEnd());
             MyDTO dto = new MyDTO()
             {
-                text = jObject
+                text = JsonConvert.SerializeObject(jObject)
             };
             return dto;
         }
@@ -71,6 +71,6 @@ ILogger log)
             this.RowKey = "12345";
         }
 
-        public JObject text { get; set; }
+        public string text { get; set; }
     }
 }
