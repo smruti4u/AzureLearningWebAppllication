@@ -15,13 +15,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CacheService.Redis", "Cache
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmosDB.DotNetSDK", "CosmosDB.DotNetSDK\CosmosDB.DotNetSDK.csproj", "{7A7E54CC-4AB2-483F-BAEB-3B7BB1D57CC6}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NewFolder1", "NewFolder1", "{D5B5C2E4-0153-48C2-B4C2-57EB6F349B28}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{D5B5C2E4-0153-48C2-B4C2-57EB6F349B28}"
 	ProjectSection(SolutionItems) = preProject
 		D:\Intellipat\Documents\pdf\Exam AZ-203-AppService.pdf = D:\Intellipat\Documents\pdf\Exam AZ-203-AppService.pdf
 		D:\Intellipat\Documents\pdf\Exam AZ-203_CosmosDB.pdf = D:\Intellipat\Documents\pdf\Exam AZ-203_CosmosDB.pdf
 		D:\Intellipat\Documents\pdf\Exam AZ-203_Storage_Blobs.pdf = D:\Intellipat\Documents\pdf\Exam AZ-203_Storage_Blobs.pdf
 		D:\Intellipat\Documents\pdf\Exam AZ-203_Webjobs.pdf = D:\Intellipat\Documents\pdf\Exam AZ-203_Webjobs.pdf
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmosDB.SP_Triggers_UDFS", "CosmosDB.SP_Triggers_UDFS\CosmosDB.SP_Triggers_UDFS.csproj", "{9B0D8F14-D8AD-4F75-A3D0-0DE5C237B8EF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +55,10 @@ Global
 		{7A7E54CC-4AB2-483F-BAEB-3B7BB1D57CC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A7E54CC-4AB2-483F-BAEB-3B7BB1D57CC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A7E54CC-4AB2-483F-BAEB-3B7BB1D57CC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B0D8F14-D8AD-4F75-A3D0-0DE5C237B8EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B0D8F14-D8AD-4F75-A3D0-0DE5C237B8EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B0D8F14-D8AD-4F75-A3D0-0DE5C237B8EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B0D8F14-D8AD-4F75-A3D0-0DE5C237B8EF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
