@@ -7,9 +7,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AzureLearningWebAppllicatio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebJobWithSDK", "WebJobWithSDK\WebJobWithSDK.csproj", "{8BF8CE66-308A-4373-A843-5F2E2742F782}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FunctionAppVS", "FunctionAppVS\FunctionAppVS.csproj", "{2238B51D-65A1-4AC9-AD6E-4C9CD83E698B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FunctionAppVS", "FunctionAppVS\FunctionAppVS.csproj", "{2238B51D-65A1-4AC9-AD6E-4C9CD83E698B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlobOperations", "BlobOperations\BlobOperations.csproj", "{ABD5CCE2-19D6-4F49-B63A-B9BBF16A83DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlobOperations", "BlobOperations\BlobOperations.csproj", "{ABD5CCE2-19D6-4F49-B63A-B9BBF16A83DA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CacheService.Redis", "CacheService.Redis\CacheService.Redis.csproj", "{963F6ADB-43A3-4529-8B38-C4D2BC5807E6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmosDB.DotNetSDK", "CosmosDB.DotNetSDK\CosmosDB.DotNetSDK.csproj", "{7A7E54CC-4AB2-483F-BAEB-3B7BB1D57CC6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NewFolder1", "NewFolder1", "{D5B5C2E4-0153-48C2-B4C2-57EB6F349B28}"
+	ProjectSection(SolutionItems) = preProject
+		D:\Intellipat\Documents\pdf\Exam AZ-203-AppService.pdf = D:\Intellipat\Documents\pdf\Exam AZ-203-AppService.pdf
+		D:\Intellipat\Documents\pdf\Exam AZ-203_CosmosDB.pdf = D:\Intellipat\Documents\pdf\Exam AZ-203_CosmosDB.pdf
+		D:\Intellipat\Documents\pdf\Exam AZ-203_Storage_Blobs.pdf = D:\Intellipat\Documents\pdf\Exam AZ-203_Storage_Blobs.pdf
+		D:\Intellipat\Documents\pdf\Exam AZ-203_Webjobs.pdf = D:\Intellipat\Documents\pdf\Exam AZ-203_Webjobs.pdf
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +45,14 @@ Global
 		{ABD5CCE2-19D6-4F49-B63A-B9BBF16A83DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ABD5CCE2-19D6-4F49-B63A-B9BBF16A83DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ABD5CCE2-19D6-4F49-B63A-B9BBF16A83DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{963F6ADB-43A3-4529-8B38-C4D2BC5807E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{963F6ADB-43A3-4529-8B38-C4D2BC5807E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{963F6ADB-43A3-4529-8B38-C4D2BC5807E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{963F6ADB-43A3-4529-8B38-C4D2BC5807E6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A7E54CC-4AB2-483F-BAEB-3B7BB1D57CC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A7E54CC-4AB2-483F-BAEB-3B7BB1D57CC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A7E54CC-4AB2-483F-BAEB-3B7BB1D57CC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A7E54CC-4AB2-483F-BAEB-3B7BB1D57CC6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

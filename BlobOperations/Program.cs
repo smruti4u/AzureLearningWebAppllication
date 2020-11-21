@@ -13,6 +13,7 @@ namespace BlobOperations
         {
             await BasicBlobOpertaion();
             Console.WriteLine("Execution Completed");
+            Console.Read();
         }
 
         static async Task BasicBlobOpertaion()
@@ -20,16 +21,43 @@ namespace BlobOperations
             var stoargeAccount = ParseStoargeAccount();
 
             CloudBlobClient blobClient = stoargeAccount.CreateCloudBlobClient();
-            CloudBlobContainer container = blobClient.GetContainerReference("vscontainer");
-            await container.CreateIfNotExistsAsync();
-            
+            CloudBlobContainer container = blobClient.GetContainerReference("vscontainer1");
+            await container.CreateIfNotExistsAsync(BlobContainerPublicAccessType.Off, null, null);
+
+            SharedAccessAccountPolicy policy = new SharedAccessAccountPolicy()
+            {
+                Permissions = SharedAccessAccountPermissions.Read | SharedAccessAccountPermissions.Write,
+                Services = SharedAccessAccountServices.Blob,
+                ResourceTypes = SharedAccessAccountResourceTypes.Container | SharedAccessAccountResourceTypes.Object | SharedAccessAccountResourceTypes.Service,
+                SharedAccessExpiryTime = DateTime.Now.AddMinutes(5)
+            };
+            string saasToken = stoargeAccount.GetSharedAccessSignature(policy);
+
             CloudBlobDirectory dir = container.GetDirectoryReference("vsupload");
             CloudBlockBlob blob = dir.GetBlockBlobReference(fileToUpload);
             await blob.UploadFromFileAsync(fileToUpload);
 
+
+           // await HandleConcurrencyAsync(blob, ConcurrencyType.Default);
+            //await HandleConcurrencyAsync(blob, ConcurrencyType.Optimistic);
+            await HandleConcurrencyAsync(blob, ConcurrencyType.Pessimistic);
+
             blob.Metadata["Author"] = "Client Code";
             blob.Metadata["Priority"] = "High";            
             await blob.SetMetadataAsync();
+
+            BlobContinuationToken token = null;
+            do
+            {
+                BlobResultSegment result = await dir.ListBlobsSegmentedAsync(true, BlobListingDetails.Metadata, 1, token, null, null);
+                token = result.ContinuationToken;
+
+                foreach(IListBlobItem item in result.Results)
+                {
+                    Console.WriteLine($"The Blob Uri {item.Uri} + {saasToken}");
+                }
+            }
+            while (token != null);
         }
 
         static CloudStorageAccount ParseStoargeAccount()
@@ -49,6 +77,55 @@ namespace BlobOperations
             }
 
             return cloudStorageAccount;
+        }
+
+        private static async Task<bool> HandleConcurrencyAsync(CloudBlockBlob blob, ConcurrencyType type)
+        {
+            switch(type)
+            {
+                case ConcurrencyType.Default:
+                    blob.Metadata["Type"] = "Default";
+                    await blob.SetMetadataAsync();
+                    break;
+                case ConcurrencyType.Optimistic:
+                    blob.Metadata["Type"] = "Optimistic";
+                    AccessCondition accessCondition = new AccessCondition()
+                    {
+                        IfMatchETag = blob.Properties.ETag
+                    };
+
+                    try
+                    {
+                        await blob.SetMetadataAsync(accessCondition, null, null);
+                    }
+                    catch(Exception exe)
+                    {
+                        return false;
+                    }
+                    break;
+                case ConcurrencyType.Pessimistic:
+                    blob.Metadata["Type"] = "Pessimistic";
+                    string leaseId = await blob.AcquireLeaseAsync(TimeSpan.FromMinutes(1));
+                    AccessCondition accessConditionOptimistic = new AccessCondition()
+                    {
+                       LeaseId = leaseId
+                    };
+
+                    try
+                    {
+                        await blob.SetMetadataAsync(accessConditionOptimistic, null, null);
+                    }
+                    catch (Exception exe)
+                    {
+                        return false;
+                    }
+                    break;
+                default:
+                    break;
+
+            }
+
+            return true;
         }
 
     }

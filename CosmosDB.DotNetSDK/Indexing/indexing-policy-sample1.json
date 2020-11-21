@@ -1,0 +1,27 @@
+﻿{
+	"indexingMode": "consistent",
+	"automatic": true,
+	"includedPaths": [
+		{
+			"path": "/title/?",
+			"indexes": [
+				{
+					"kind": "Range",
+					"dataType": "String",
+					"precision": -1
+				}
+			]
+		},
+		{
+			"path": "/*",
+			"indexes": [
+				{
+					"kind": "Range",
+					"dataType": "String",
+					"precision": -1
+				}
+			]
+		}
+	],
+	"excludedPaths": []
+}
