@@ -1,0 +1,271 @@
+﻿--------------------
+-- Scalar Queries --
+--------------------
+
+-- Basic expressions
+
+SELECT "Hello"
+
+SELECT "Hello" AS word
+
+SELECT VALUE "Hello"
+
+SELECT "Hello", "World"
+
+SELECT
+ "Hello" AS word1,
+ "World" AS word2
+
+-- Shaping nested arrays
+-- and embedded objects
+
+SELECT
+[
+  "Hello",
+  "World"
+]
+ AS words
+
+SELECT
+{
+  "word1": "Hello",
+  "word2": "World"
+}
+ AS words
+
+SELECT
+{
+  "words1":
+    ["Hello", "World"],
+  "words2":
+    ["How", "Are", "You?"]
+}
+ AS allWords
+
+-- Arithmetic operators
+
+SELECT
+ 8 * ((2 + 16) - 2) / 2 AS a,
+ 8 * ((2 + 16) - 2) / 2.1 AS b
+
+-- Logical operators
+
+SELECT
+(
+  "hot" = "cold" AND
+  "up" = "down" OR
+  1 = 1
+) AS logical1,
+(
+  "hot" = "cold" AND (
+    "up" = "down" OR
+    1 = 1
+  )
+) AS logical2
+
+-- Comparison, ternary, and
+-- ternary coalesce operators
+
+SELECT
+(
+  2 > 3 ?
+    "higher" :
+    "lower or equal"
+) AS ternary
+
+SELECT
+(
+ undefined ??
+ undefined ??
+ "third") AS coalesce1,
+(
+ undefined ??
+ "second" ??
+ "third") AS coalesce2,
+(
+ "first" ??
+ undefined ??
+ "third") AS coalesce3
+     
+-- String concatenation
+-- operator
+
+SELECT
+  "Hello" || " " || "World"
+    AS StringConcat
+
+-- Math functions
+
+SELECT
+ ROUND(3.4) AS MathRound1,
+ ROUND(3.5) AS MathRound2,
+ CEILING(3.4) AS MathCeiling1,
+ CEILING(3.5) AS MathCeiling2,
+ FLOOR(3.4) AS MathFloor1,
+ FLOOR(3.5) AS MathFloor2,
+ ABS(-5) AS MathAbs1,
+ ABS(5) AS MathAbs2,
+ SIN(28) AS MathSin,
+ COS(28) AS MathCos,
+ TAN(28) AS MathTan,
+ LOG(16) AS MathLog,
+ PI() AS MathPi
+
+-- Type checking
+
+SELECT
+ IS_ARRAY(6) AS IsArray1,
+ IS_ARRAY([6]) AS IsArray2,
+ IS_BOOL(6) AS IsBool1,
+ IS_BOOL(false) AS IsBool2,
+ IS_NULL(6) AS IsNull1,
+ IS_NULL(null) AS IsNull2,
+ IS_OBJECT("hello")
+  AS  IsObject1,
+ IS_OBJECT({"word": "hello"})
+  AS IsObject2
+
+-- String
+
+SELECT
+ CONCAT("A", "b", "c", "d")
+  AS SConcat,
+ CONTAINS("Abcdef", "cde")
+  AS SContains,
+ STARTSWITH("Abcdef", "Ab")
+  AS SStartsWith,
+ ENDSWITH("Abcdef", "cdef")
+  AS SEndsWith,
+ INDEX_OF("Abcdef", "de")
+  AS SIndexOf1,
+ INDEX_OF("Abcdef", "df")
+  AS SIndexOf2,
+ LEFT("Abcdef", 3) AS SLeft,
+ RIGHT("Abcdef", 3) AS SRight,
+ SUBSTRING("Abcdef", 2, 3)
+  AS SSubstring,
+ LENGTH("Abcdef") AS SLength,
+ LOWER("Abcdef") AS SLower,
+ UPPER("Abcdef") AS SUpper
+
+-- Array
+
+SELECT
+ ARRAY_CONCAT(
+  ["A", "B"],
+  ["1", "2"],
+  ["#"])
+    AS AConcat,
+ ARRAY_CONTAINS(
+  ["1A", "1B", "1C"],
+  "1B")
+    AS AContains,
+ ARRAY_LENGTH(
+  ["1A", "1B", "1C"])
+    AS ALength,
+ ARRAY_SLICE(
+  ["1A", "1B", "1C", "1D"],
+  1,
+  2)
+    AS ASlice
+
+----------------------
+-- Families Collection
+----------------------
+
+-- FROM clause
+
+-- Can just use 'c'
+-- for collection
+SELECT * FROM c
+
+-- Get city and state
+SELECT
+ c.location.city,
+ c.location.state
+FROM c
+
+-- Can use collection name
+SELECT
+ Families.location.city,
+ Families.location.state
+FROM Families
+
+-- Can "double"-alias
+SELECT
+ f.location.city,
+ f.location.state
+FROM Families AS f
+
+-- Reduce source to subset
+-- of children (per family)
+SELECT *
+ FROM c.children
+ 
+-- With reduced source, can't
+-- query outside the subset
+SELECT *
+ FROM c.children
+ WHERE c.location.state = 'NY'
+  
+-- All queryable properties
+-- need to be in scope
+SELECT c.children
+ FROM c
+ WHERE c.location.state = 'NY'
+
+-- FROM with IN
+-- (flatten documents)
+
+SELECT *
+ FROM ch IN c.children
+
+SELECT
+  ch.givenName ?? ch.firstName
+   AS childName,
+  ch.grade,
+  ARRAY_LENGTH(ch.pets) ?? 0
+   AS numberOfPets,
+  ch.pets
+FROM
+ ch IN c.children
+
+-- FROM with JOIN
+
+-- Duplicate parent-level
+-- info for each child
+SELECT
+ f.id,
+ f.location.city,
+ f.location.state,
+ ch.givenName ?? ch.firstName
+  AS childName,
+ ARRAY_LENGTH(ch.pets) ?? 0
+  AS numberOfPets,
+ ch.pets
+FROM c AS f
+JOIN ch IN f.children
+
+-- Double JOIN to flatten
+-- children and pets
+SELECT
+ f.id,
+ ch.givenName ?? ch.firstName
+  AS childName,
+ p.givenName AS petName,
+ p.type
+FROM c AS f
+JOIN ch IN f.children
+JOIN p IN ch.pets
+
+-- Flatten to string array of
+-- pet names using VALUE
+SELECT p.givenName 
+ FROM c AS f
+ JOIN ch IN f.children 
+ JOIN p IN ch.pets
+
+SELECT VALUE p.givenName 
+ FROM c AS f
+ JOIN ch IN f.children 
+ JOIN p IN ch.pets
