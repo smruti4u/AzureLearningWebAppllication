@@ -1,0 +1,15 @@
+﻿@{
+    ViewData["Title"] = "Privacy Policy";
+}
+<h1>@ViewData["Title"]</h1>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <span>Hello @User.Identity.Name</span>
+    <p>I am in Authenticated Space</p>
+}
+else
+{
+    <h4>Please Login to view this space in <a asp-controller="Home" asp-action="Index">Home</a> page</h4>
+    
+}
